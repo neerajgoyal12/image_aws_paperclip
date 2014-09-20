@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
-  # belongs_to :user
+
   # GET /photos
   # GET /photos.json
   def index
