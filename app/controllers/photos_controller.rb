@@ -4,7 +4,6 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     @photos = Photo.all
   end
 
@@ -15,6 +14,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     @photo = Photo.new
   end
 
