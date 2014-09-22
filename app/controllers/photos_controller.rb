@@ -14,7 +14,11 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+    s3 = AWS::S3.new
+    @s3_direct_post = s3.buckets[Rails.configuration.aws[:bucket]].presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+    puts "************** \n " 
+    puts @s3_direct_post.url 
+    puts "************** \n "
     @photo = Photo.new
   end
 
@@ -70,6 +74,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:ulr, :user_id)
+      params.require(:photo).permit(:image, :user_id)
     end
 end
