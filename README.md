@@ -15,13 +15,13 @@ Add this to your aaplication's Gemfile
 	gem 's3_direct_upload'
 	gem 'figaro'
 
-Then the usual 
+### Then the usual 
 	$ bundle install 
 
-Forgot to add an image field which will be our paperclip attachment. So a migration like this. 
+### Forgot to add an image field which will be our paperclip attachment. So a migration like this. 
 	$ rails g migration AddImageToPhotos
 
-In your generated migration 
+### In your generated migration 
 	class AddImageToPhotos < ActiveRecord::Migration
   		def change
   			add_attachment :photos, :image
@@ -29,6 +29,7 @@ In your generated migration
 	end
 
 Update your models photo.rb 
+``` ruby
 	belongs_to :user
 	  has_attached_file :image, styles:  { 
 	  	thumb: '100x100>',
@@ -36,6 +37,7 @@ Update your models photo.rb
 	  	large: '640x640>'
 	  }
 	validates_attachment_content_type :image, :content_type  => /\Aimage\/.*\Z/
+```
 
 And user.rb 
 	has_many :photos
