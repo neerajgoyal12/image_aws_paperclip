@@ -14,11 +14,6 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    s3 = AWS::S3.new
-    @s3_direct_post = s3.buckets[Rails.configuration.aws[:bucket]].presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
-    puts "************** \n " 
-    puts @s3_direct_post.url 
-    puts "************** \n "
     @photo = Photo.new
   end
 
@@ -29,18 +24,46 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @photo = Photo.new(photo_params)
-
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: @photo }
+    
+    if(params[:url])
+    @photo = Photo.new
+    render "new" and return
+    end
+ 
+    if(params[:photo][:ulr])
+        @photo = Photo.new(photo_params)
+        respond_to do |format|
+         if @photo.save
+            #we want a destination(paperclip_file_path) and a source(raw_source)
+            # paperclip_file_path = "raffles/attached_files/#{@raffle.id}/original/#{params[:raffle][:attached_file_file_name]}"
+            # raw_source = params[:raffle][:attached_file_file_path]
+            
+            # Raffle.copy_and_delete paperclip_file_path, raw_source #this is where we call a method to copy from temp location to where paperclip expects it to be.
+            format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
+            format.json { render action: 'show', status: :created, location: @photo }
+          else
+            format.html { render action: 'new' }
+            format.json { render json: @photo.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
+        @photo = Photo.new
+        render action: 'new', notice: "No file"
     end
   end
+  # def create
+  #   @photo = Photo.new(photo_params)
+
+  #   respond_to do |format|
+  #     if @photo.save
+  #       format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
+  #       format.json { render :show, status: :created, location: @photo }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @photo.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /photos/1
   # PATCH/PUT /photos/1.json

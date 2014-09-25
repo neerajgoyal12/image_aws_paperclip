@@ -40,5 +40,6 @@ gem 'spring',        group: :development
 
 gem 'paperclip'
 gem 'aws-sdk'
-
+gem 's3_direct_upload'
+gem 'figaro'
 

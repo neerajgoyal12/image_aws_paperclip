@@ -1,5 +1,45 @@
 <h1>New photo</h1>
+<%= s3_uploader_form callback_url: photos_path, 
+                     callback_param: "photos[ulr]", 
+                     id: "s3_uploader",
+                     key_starts_with: "paperclip-development",
+                     key: "paperclip-development/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}",
+                     max_file_size: 14.megabytes do %>
+  <%= file_field_tag :file, multiple: true %>
+<% end %>
+<div id="uploads_container"></div>
+  <script id="template-upload" type="text/x-tmpl">
+  <div id="file-{%=o.unique_id%}" class="upload">
+    <p>This is a progress bar.</p>
+    {%=o.name%}
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+  </div>
+</div>s
+</script>
+<div class="preview"></div>
+<%= form_for(@photo) do |f| %>
+  <% if @photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
 
-<%= render 'form' %>
+      <ul>
+      <% @photo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <%= f.hidden_field :ulr %>
+  <%= f.hidden_field :image_file_name %>
+  <%= f.hidden_field :image_file_size %>
+  <%= f.hidden_field :image_content_type %>
+ 
+  <%= f.submit "Upload" %>
+<% end %>
+<%= debug @photo %>
 
 <%= link_to 'Back', photos_path %>

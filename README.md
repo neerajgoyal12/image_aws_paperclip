@@ -25,4 +25,4 @@ References
 
 https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging
 http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and
-
+http://railsapps.github.io/rails-environment-variables.html
