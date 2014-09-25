@@ -1,5 +1,5 @@
 # image_aws_paperclip
-An example rails 4.0 app for uploading an image to s3 bucket, with paperclip, aws-sdk and s3_direct_uploader gems .
+An example rails 4.0 app for uploading an image to s3 bucket, with [paperclip](https://github.com/thoughtbot/paperclip),[aws-sdk](https://github.com/aws/aws-sdk-ruby) and [s3_direct_uploader](https://github.com/waynehoover/s3_direct_upload) gems.
 
 # How to Begin 
 	$ rails new image_aws_paperclip
@@ -15,43 +15,47 @@ Add this to your aaplication's Gemfile
 	gem 's3_direct_upload'
 	gem 'figaro'
 
-### Then the usual 
+Then the usual 
+
 	$ bundle install 
 
-### Forgot to add an image field which will be our paperclip attachment. So a migration like this. 
+Forgot to add an image field which will be our paperclip attachment. So a migration like this. 
+
 	$ rails g migration AddImageToPhotos
 
-### In your generated migration 
-	class AddImageToPhotos < ActiveRecord::Migration
-  		def change
-  			add_attachment :photos, :image
-  		end
+In your generated migration 
+``` ruby
+class AddImageToPhotos < ActiveRecord::Migration
+	def change
+		add_attachment :photos, :image
 	end
+end
+```
 
 Update your models photo.rb 
 ``` ruby
-	belongs_to :user
-	  has_attached_file :image, styles:  { 
-	  	thumb: '100x100>',
-	  	mobile: '320x320>',
-	  	large: '640x640>'
-	  }
-	validates_attachment_content_type :image, :content_type  => /\Aimage\/.*\Z/
+belongs_to :user
+  has_attached_file :image, styles:  { 
+  	thumb: '100x100>',
+  	mobile: '320x320>',
+  	large: '640x640>'
+  }
+validates_attachment_content_type :image, :content_type  => /\Aimage\/.*\Z/
 ```
 
 And user.rb 
-	has_many :photos
+``` ruby
+has_many :photos
+```
 
 Rest of the code update is a mixture of 
-https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging
+* https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging
 and 
-http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and
+* http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and
 and 
-http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93
+* http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93
 
-A word of caution, I couldn't get the heroku code working as it would give me a invalid argument, as the file
-was not the last element in post request. Do leave a comment if you get it working. An example response error,
-not the one I encountered. 
+A word of caution, I couldn't get the heroku code working as it would give me a invalid argument, as the file was not the last element in post request. Do leave a comment if you get it working. An example response error, not the one I encountered. 
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<Error>
@@ -61,8 +65,7 @@ not the one I encountered.
 	  <RequestId>4442587FB7D0A2F9</RequestId>
 	</Error>
 
-Using figaro for setting evn variables so that need not expose aws_access_key_id, aws_secret_access_key and aws_bucket.
-You can look at the following link for more information http://railsapps.github.io/rails-environment-variables.html
+Using figaro for setting evn variables so that need not expose aws_access_key_id, aws_secret_access_key and aws_bucket. You can look at the following link for more information http://railsapps.github.io/rails-environment-variables.html
 
 Amazon Bucket CORS setting 
 
@@ -77,8 +80,13 @@ Amazon Bucket CORS setting
 	    </CORSRule>
 	</CORSConfiguration>
 
-References 
+### **Currently stucked with access denied error, code closest to [Varun Mayya](http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93)**
 
-https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging
-http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and
-http://railsapps.github.io/rails-environment-variables.html
+References, Tutorials and Gratitudes 
+
+[heroku example](https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging)
+[little blimp](http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and)
+[railsapps](http://railsapps.github.io/rails-environment-variables.html)
+[Varun Mayya](http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93)
+
+
