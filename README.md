@@ -84,9 +84,9 @@ Amazon Bucket CORS setting
 
 References, Tutorials and Gratitudes 
 
-[heroku example](https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging)
-[little blimp](http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and)
-[railsapps](http://railsapps.github.io/rails-environment-variables.html)
-[Varun Mayya](http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93)
+* [heroku example](https://devcenter.heroku.com/articles/direct-to-s3-image-uploads-in-rails#debugging)
+* [little blimp](http://blog.littleblimp.com/post/53942611764/direct-uploads-to-s3-with-rails-paperclip-and)
+* [railsapps](http://railsapps.github.io/rails-environment-variables.html)
+* [Varun Mayya](http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93)
 
 
