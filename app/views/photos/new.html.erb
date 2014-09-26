@@ -4,7 +4,8 @@
                      id: "s3_uploader",
                      key_starts_with: "paperclip-development",
                      key: "paperclip-development/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}",
-                     max_file_size: 14.megabytes do %>
+                     max_file_size: 14.megabytes,
+					 data: {:key => :val} do %>
   <%= file_field_tag :file, multiple: true %>
 <% end %>
 <div id="uploads_container"></div>
