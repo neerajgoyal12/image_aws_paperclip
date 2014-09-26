@@ -31,10 +31,11 @@ var do_on_load = function() {
  
   $('#s3_uploader').bind('s3_upload_complete', function(e, content) {
   	//insert any post progress bar complete stuff here.
-	  $('#image_ulr').val(content.url);
-	  $('#photos_image_file_name').val(content.filename);
-	  $('#photos_image_file_size').val(content.filesize);
-	  $('#photos_image__content_type').val(content.filetype);
+	console.log($('#phots_image_file_name'));
+	  $('#photo_ulr').val(content.url);
+	  $('#photo_image_file_name').val(content.filename);
+	  $('#photo_image_file_size').val(content.filesize);
+	  $('#photo_image_content_type').val(content.filetype);
 	});
  
 };

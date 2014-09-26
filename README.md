@@ -1,5 +1,5 @@
 # image_aws_paperclip
-An example rails 4.0 app for uploading an image to s3 bucket, with [paperclip](https://github.com/thoughtbot/paperclip),[aws-sdk](https://github.com/aws/aws-sdk-ruby) and [s3_direct_uploader](https://github.com/waynehoover/s3_direct_upload) gems.
+An example rails 4.0 app for uploading an image to s3 bucket, with [paperclip](https://github.com/thoughtbot/paperclip), [aws-sdk](https://github.com/aws/aws-sdk-ruby) and [s3_direct_uploader](https://github.com/waynehoover/s3_direct_upload) gems.
 
 # How to Begin 
 	$ rails new image_aws_paperclip
@@ -80,7 +80,8 @@ Amazon Bucket CORS setting
 	    </CORSRule>
 	</CORSConfiguration>
 
-### **Currently stucked with access denied error, code closest to [Varun Mayya](http://www.blitztheory.com/direct-upload-with-s3_direct_upload/#comment-93)**
+#### Files getting uploaded correctly after changin aws_access_key_id and aws_secret_access_key to aws root account, instead of an IAm user credentials and its working. 
+
 
 References, Tutorials and Gratitudes 
 

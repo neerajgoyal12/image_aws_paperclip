@@ -25,12 +25,13 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     
-    if(params[:url])
-    @photo = Photo.new
-    render "new" and return
-    end
+    # if(params[:url])
+#     @photo = Photo.new
+#     render "new" and return
+#     end
  
     if(params[:photo][:ulr])
+        puts params[:photo][:ulr]
         @photo = Photo.new(photo_params)
         respond_to do |format|
          if @photo.save
